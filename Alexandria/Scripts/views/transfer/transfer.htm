@@ -1,0 +1,29 @@
+﻿<div>
+  <H2>Transfer book: <%=model.bookName%></H2>
+    <form>
+       <div class="row">
+          <% _.each(model.requests, function(item) {%>
+            <div class="span10">
+              <%=item.User%>
+            </div>
+            <div class="span2">
+              <button id="transferButton" type="button" class="btn btn-success" data-pendingrequestid="<%=item.Id%>" style="float:right;">Transfer</button>
+            </div>              
+            <br />
+            <div class="span12">
+            <%
+                var date = new Date(item.Date);
+                var curr_date = date.getDate();
+                var curr_month = date.getMonth() + 1;
+                var curr_year = date.getFullYear();
+                var formattedDate = curr_date + "-" + curr_month + "-" + curr_year;
+            %>
+              First requested on <%=formattedDate%>
+            </div>
+            <div class="span12">
+            <hr/>
+          </div>
+          <%})%>
+      </div>
+    </form>  
+</div>

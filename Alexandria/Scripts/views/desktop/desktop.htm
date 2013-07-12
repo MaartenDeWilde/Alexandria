@@ -1,0 +1,61 @@
+<div class="row-fluid">
+  <!-- CAROUSEL -->
+  <div class="span7">
+    <h2>Most popular</h2>
+    <div id="myCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <% _.each(model.popularitems, function(item){ %>
+          <div class="item" >
+            <p><a href="/Alexandria/Detail/<%=item.Id%>"><img class="bookCarouselImg" src="http://covers.openlibrary.org/b/isbn/<%=item.ISBN%>.jpg" /></a></p>
+            <div class="carousel-caption" >
+              <h4><%=item.Title%></h4>
+              <p style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"><%=item.Description%></p>
+            </div>
+          </div> 
+        <%})%>
+      </div>
+      <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+  </div>
+  <div class="span1" />
+
+  <!-- LENDED BOAKS -->
+  <div class="span4" >
+    <h2>Borrowed</h2>
+    <div class="overflowtable">
+      <table class="table table-striped ">
+        <tbody>
+          <% _.each(model.lendedbooks, function(item){ %>
+            <tr>
+              <td>
+                <div>
+                  <div class="row-fluid">
+                    <div class="span4">
+                      <img class="smallBookImg" src="http://covers.openlibrary.org/b/isbn/<%=item.ISBN%>.jpg" />
+                    </div>
+                    <div class="span8">
+                      <a href="/Alexandria/Detail/<%=item.Id%>"><h5><%=item.Title%></h5></a>
+                      <p>Pending requests: <%=item.PendingRequests%></p>
+                      <p><span class="badge badge-warning"><%=item.AverageRating%></span></p>
+                      <p>
+                        <% _.each(item.Tags.split(","), function(item){ %>
+                            <span class="label label-info"><%=item%></span> 
+                        <%})%>              
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <%})%>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<p align="right">
+  <button id="btnaddnew" class="btn btn-small btn-primary" type="button">Add new</button>
+  <button id="btnsearch" class="btn btn-small" type="button">View all books</button>
+</p>
+

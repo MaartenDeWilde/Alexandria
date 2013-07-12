@@ -1,0 +1,103 @@
+﻿<div>
+    <div class="row-fluid">
+      <div class="span12">       
+        <div class="row-fluid">
+          <div class="span5">
+            <div>
+              <a id="cover_image" href="http://covers.openlibrary.org/b/isbn/<%=model.ISBN%>.jpg">
+                <img class="img-polaroid" src="http://covers.openlibrary.org/b/isbn/<%=model.ISBN%>.jpg" />
+              </a>
+            </div>
+            <div><%=model.numberOfBorrows%> borrows</div>
+          </div>         
+          <div class="span7">
+            <div class="row-fluid">
+                <div class="span12"> <H2><%=model.bookName%></H2></div>
+                <div class="span12"> <H4><%=model.bookAuthor%></H4></div>
+                <div class="span1 pull-right" style="vertical-align: middle;">                    
+                    <span class="badge badge-warning pull-right"><%=model.averageRating ? model.averageRating : "-" %></span>                    
+                </div>
+            </div>
+            <div>
+              <%=model.description.replace(/\n/g, '<br />')%>
+            </div>
+            <br />
+             <div class="row-fluid">
+               <div class="span12">ISBN: <%=model.ISBN%></div>
+            </div>
+            <div class="row-fluid">
+               <div class="span12">TAGS:</div>
+            </div>
+            <div class="row-fluid">
+              <div class="span9">
+                <% _.each(model.tags.split(","), function(item){ %>
+                    <span class="label label-info"><%=item%></span> 
+                <%})%>              
+              </div>
+              <div class="span3"> 
+                
+              </div>
+            </div>           
+            <div class="row-fluid" style="margin-top:4px">
+            <%
+                var date = new Date(model.inOrganizationSince);
+                var curr_date = date.getDate();
+                var curr_month = date.getMonth() + 1;
+                var curr_year = date.getFullYear();
+                var formattedDate = curr_date + "-" + curr_month + "-" + curr_year;
+            %>
+              <div class="span6">In organization since: <%=formattedDate%></div>
+              <div class="span6"> 
+                <button id="transferButton" type="submit" class="btn btn-success pull-right hide">Transfer</button>
+                <button id="requestButton" type="submit" class="btn btn-primary pull-right hide">Request</button>
+                <button id="copyBook"  type="button" style="margin-right: 10px;" class="btn btn-info pull-right">
+                  Add copy
+                </button>
+              </div>
+            </div>
+            </div>           
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+  <div class="overflowtable">
+      <table class="table table-striped ">
+        <tbody>
+          <% _.each(model.ratings, function(item){ %>
+            <tr>
+              <td>
+                <div>
+                  <div class="row-fluid"> 
+                   <div class="span6"><%=item.User%></div>
+                   <div class="span6">
+                      <span class="badge badge-warning pull-right"><%=item.RatingGiven%></span>
+                   </div>                  
+                   <div class="span12"><%=item.Comment%></div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <%})%>
+        </tbody>
+      </table>
+    </div>
+    <br />
+  <textarea id="comment" rows="4" class="span12" placeholder="Type something…"/>     
+  <div class="row">
+     <div class="span6">
+      <div class="btn-toolbar">
+        <div id="ratingButton" class="btn-group" data-toggle="buttons-radio">
+          <button class="btn">1</button>
+          <button class="btn">2</button>
+          <button class="btn active">3</button>
+          <button class="btn">4</button>
+          <button class="btn">5</button>
+        </div>
+      </div>
+     </div>
+     <div class="span6">
+        <button id="rateButton" type="button" class="btn btn-primary pull-right" style="margin-top:8px">Rate book</button>
+     </div>
+  </div>
+</div>

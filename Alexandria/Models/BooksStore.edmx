@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AlexandriaModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="AlexandriaModelStoreContainer">
+          <EntitySet Name="BookCopies" EntityType="AlexandriaModel.Store.BookCopies" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Books" EntityType="AlexandriaModel.Store.Books" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BooksTags" EntityType="AlexandriaModel.Store.BooksTags" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PendingRequests" EntityType="AlexandriaModel.Store.PendingRequests" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Ratings" EntityType="AlexandriaModel.Store.Ratings" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Tags" EntityType="AlexandriaModel.Store.Tags" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_BookCopies_Books" Association="AlexandriaModel.Store.FK_BookCopies_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="BookCopies" EntitySet="BookCopies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BooksTags_Books" Association="AlexandriaModel.Store.FK_BooksTags_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="BooksTags" EntitySet="BooksTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BooksTags_Tags" Association="AlexandriaModel.Store.FK_BooksTags_Tags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="BooksTags" EntitySet="BooksTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PendingRequests_Books" Association="AlexandriaModel.Store.FK_PendingRequests_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="PendingRequests" EntitySet="PendingRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ratings_Books" Association="AlexandriaModel.Store.FK_Ratings_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BookCopies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BookId" Type="int" Nullable="false" />
+          <Property Name="Owner" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LendedTo" Type="nvarchar(max)" />
+          <Property Name="LastTransferDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Books">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="InOrganizationSince" Type="date" Nullable="false" />
+          <Property Name="TimesTransfered" Type="int" Nullable="false" />
+          <Property Name="ISBN" Type="nvarchar" Nullable="false" MaxLength="13" />
+          <Property Name="Image" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Author" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BooksTags">
+          <Key>
+            <PropertyRef Name="BookId" />
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="BookId" Type="int" Nullable="false" />
+          <Property Name="TagId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PendingRequests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="User" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="BookId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ratings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RatingGiven" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="User" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BookId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TagName" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_BookCopies_Books">
+          <End Role="Books" Type="AlexandriaModel.Store.Books" Multiplicity="1" />
+          <End Role="BookCopies" Type="AlexandriaModel.Store.BookCopies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BookCopies">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BooksTags_Books">
+          <End Role="Books" Type="AlexandriaModel.Store.Books" Multiplicity="1" />
+          <End Role="BooksTags" Type="AlexandriaModel.Store.BooksTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BooksTags">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BooksTags_Tags">
+          <End Role="Tags" Type="AlexandriaModel.Store.Tags" Multiplicity="1" />
+          <End Role="BooksTags" Type="AlexandriaModel.Store.BooksTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BooksTags">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PendingRequests_Books">
+          <End Role="Books" Type="AlexandriaModel.Store.Books" Multiplicity="1" />
+          <End Role="PendingRequests" Type="AlexandriaModel.Store.PendingRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PendingRequests">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ratings_Books">
+          <End Role="Books" Type="AlexandriaModel.Store.Books" Multiplicity="1" />
+          <End Role="Ratings" Type="AlexandriaModel.Store.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AlexandriaModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AlexandriaEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="BookCopies" EntityType="AlexandriaModel.BookCopy" />
+          <EntitySet Name="Books" EntityType="AlexandriaModel.Book" />
+          <EntitySet Name="PendingRequests" EntityType="AlexandriaModel.PendingRequest" />
+          <EntitySet Name="Ratings" EntityType="AlexandriaModel.Rating" />
+          <EntitySet Name="Tags" EntityType="AlexandriaModel.Tag" />
+          <AssociationSet Name="FK_BookCopies_Books" Association="AlexandriaModel.FK_BookCopies_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="BookCopies" EntitySet="BookCopies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PendingRequests_Books" Association="AlexandriaModel.FK_PendingRequests_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="PendingRequests" EntitySet="PendingRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ratings_Books" Association="AlexandriaModel.FK_Ratings_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="BooksTags" Association="AlexandriaModel.BooksTags">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="BookCopy">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="BookId" Type="Int32" Nullable="false" />
+          <Property Name="Owner" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LendedTo" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LastTransferDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Book" Relationship="AlexandriaModel.FK_BookCopies_Books" FromRole="BookCopies" ToRole="Books" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="InOrganizationSince" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TimesTransfered" Type="Int32" Nullable="false" />
+          <Property Name="ISBN" Type="String" Nullable="false" MaxLength="13" Unicode="true" FixedLength="false" />
+          <Property Name="Image" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="BookCopies" Relationship="AlexandriaModel.FK_BookCopies_Books" FromRole="Books" ToRole="BookCopies" />
+          <NavigationProperty Name="PendingRequests" Relationship="AlexandriaModel.FK_PendingRequests_Books" FromRole="Books" ToRole="PendingRequests" />
+          <NavigationProperty Name="Ratings" Relationship="AlexandriaModel.FK_Ratings_Books" FromRole="Books" ToRole="Ratings" />
+          <NavigationProperty Name="Tags" Relationship="AlexandriaModel.BooksTags" FromRole="Books" ToRole="Tags" />
+          <Property Type="String" Name="Author" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PendingRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="BookId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="AlexandriaModel.FK_PendingRequests_Books" FromRole="PendingRequests" ToRole="Books" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="RatingGiven" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="User" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="BookId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="AlexandriaModel.FK_Ratings_Books" FromRole="Ratings" ToRole="Books" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="TagName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Books" Relationship="AlexandriaModel.BooksTags" FromRole="Tags" ToRole="Books" />
+        </EntityType>
+        <Association Name="FK_BookCopies_Books">
+          <End Role="Books" Type="AlexandriaModel.Book" Multiplicity="1" />
+          <End Role="BookCopies" Type="AlexandriaModel.BookCopy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BookCopies">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PendingRequests_Books">
+          <End Role="Books" Type="AlexandriaModel.Book" Multiplicity="1" />
+          <End Role="PendingRequests" Type="AlexandriaModel.PendingRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PendingRequests">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ratings_Books">
+          <End Role="Books" Type="AlexandriaModel.Book" Multiplicity="1" />
+          <End Role="Ratings" Type="AlexandriaModel.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BooksTags">
+          <End Role="Books" Type="AlexandriaModel.Book" Multiplicity="*" />
+          <End Role="Tags" Type="AlexandriaModel.Tag" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AlexandriaModelStoreContainer" CdmEntityContainer="AlexandriaEntities">
+          <EntitySetMapping Name="BookCopies">
+            <EntityTypeMapping TypeName="AlexandriaModel.BookCopy">
+              <MappingFragment StoreEntitySet="BookCopies">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="LendedTo" ColumnName="LendedTo" />
+                <ScalarProperty Name="LastTransferDate" ColumnName="LastTransferDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="AlexandriaModel.Book">
+              <MappingFragment StoreEntitySet="Books">
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="InOrganizationSince" ColumnName="InOrganizationSince" />
+                <ScalarProperty Name="TimesTransfered" ColumnName="TimesTransfered" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PendingRequests">
+            <EntityTypeMapping TypeName="AlexandriaModel.PendingRequest">
+              <MappingFragment StoreEntitySet="PendingRequests">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="AlexandriaModel.Rating">
+              <MappingFragment StoreEntitySet="Ratings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RatingGiven" ColumnName="RatingGiven" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="AlexandriaModel.Tag">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="BooksTags" TypeName="AlexandriaModel.BooksTags" StoreEntitySet="BooksTags">
+            <EndProperty Name="Books">
+              <ScalarProperty Name="Id" ColumnName="BookId" />
+            </EndProperty>
+            <EndProperty Name="Tags">
+              <ScalarProperty Name="Id" ColumnName="TagId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

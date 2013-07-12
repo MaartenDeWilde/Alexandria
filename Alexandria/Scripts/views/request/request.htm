@@ -1,0 +1,22 @@
+﻿<div>
+  <H2>Request book: <%=model.bookName%></H2>
+    <form>
+       <div class="row">
+          <% _.each(model.items, function(item) {%>
+            <div class="span10">
+              <%=item.user%>
+            </div>
+            <div class="span2">
+              <button type="submit" class="btn btn-success" style="float:right;">Request</button>
+            </div>              
+            <br />
+            <div class="span12">
+              Checked out since <%=item.checkoutDate%>
+            </div>
+            <div class="span12">
+            <hr/>
+          </div>
+          <%})%>
+      </div>
+    </form>  
+</div>

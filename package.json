@@ -1,0 +1,18 @@
+{
+  "name": "testboard-project",
+  "version": "0.0.1",
+  "scripts": {
+    "preinstall": "npm install -g nodemon -g mocha -g jshint -g coffee-script -g requirejs -g uglify-js -g mocha-cakes"
+  },
+  "dependencies": {
+    "express": "",
+    "underscore": "",
+    "which": "",
+    "should": "~1.2.0",
+    "mocha-cakes": "~0.9.0",
+    "zombie": "",
+    "zombify" : "",
+    "mocha": "",
+    "coffee-script": ""
+  }
+}
